@@ -1,0 +1,3 @@
+- Link to documentation: https://documenter.getpostman.com/view/20417456/2sB2cRCPWt
+- Link to live Api: https://product-management-rhen.onrender.com
+- Link to docker image: https://hub.docker.com/r/shizuo85/product-manager

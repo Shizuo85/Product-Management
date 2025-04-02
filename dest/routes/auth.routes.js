@@ -1,0 +1,26 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const signup_controller_1 = __importDefault(require("../modules/auth/controllers/signup.controller"));
+const signup_middleware_1 = __importDefault(require("../modules/auth/middleware/signup.middleware"));
+const login_controller_1 = __importDefault(require("../modules/auth/controllers/login.controller"));
+const login_middleware_1 = __importDefault(require("../modules/auth/middleware/login.middleware"));
+const verification_controller_1 = __importDefault(require("../modules/auth/controllers/verification.controller"));
+const verification_middleware_1 = __importDefault(require("../modules/auth/middleware/verification.middleware"));
+const refresh_middleware_1 = __importDefault(require("../modules/user/middleware/refresh.middleware"));
+const auth_controller_1 = __importDefault(require("../modules/user/controllers/auth.controller"));
+const forgot_password_middleware_1 = __importDefault(require("../modules/auth/middleware/forgot_password.middleware"));
+const forgot_password_controller_1 = __importDefault(require("../modules/auth/controllers/forgot_password.controller"));
+const authRouter = (0, express_1.Router)();
+authRouter.post('/signup', signup_middleware_1.default.emailSignup, signup_controller_1.default.emailSignup);
+authRouter.post('/login', login_middleware_1.default.emailLogin, login_controller_1.default.emailLogin);
+authRouter.post('/verify-code', verification_middleware_1.default.verificationAuth, verification_middleware_1.default.verifyCode, verification_controller_1.default.verifyCode);
+authRouter.post('/resend-code', verification_middleware_1.default.resendCode, verification_controller_1.default.resendCode);
+authRouter.get('/refresh-token', refresh_middleware_1.default, auth_controller_1.default.refreshLoginToken);
+authRouter.post('/forgot-password', forgot_password_middleware_1.default.forgotPassword, forgot_password_controller_1.default.forgotPassword);
+authRouter.post('/forgot-password/verify', forgot_password_middleware_1.default.forgotPasswordVerify, forgot_password_controller_1.default.forgotPasswordVerify);
+authRouter.post('/new-password', forgot_password_middleware_1.default.authenticateReset, forgot_password_middleware_1.default.resetPassword, forgot_password_controller_1.default.resetPassword);
+exports.default = authRouter;
